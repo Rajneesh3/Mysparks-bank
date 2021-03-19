@@ -9,7 +9,7 @@ if(!$conn){
   die("sorry".mysqli_connect_error());
 }
 else{
-  // echo "Connection to db successful<br>";
+  echo "Connection to db successful<br>";
 }
 
 if(isset($_POST['submit']))
@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
 
     $sql = "SELECT * from customers where id=$from";
     $query = mysqli_query($conn,$sql);
-    $sql1 = mysqli_fetch_array($query); // returns array or output of user from which the amount is to be transferred.
+    $sql1 = mysqli_fetch_array($query);
 
     $sql = "SELECT * from customers where id=$to";
     $query = mysqli_query($conn,$sql);
@@ -29,20 +29,19 @@ if(isset($_POST['submit']))
      if($amount == 0){
 
 
-         echo "alert('Oops! Zero value cannot be transferred')";
+         echo "alert('Unsufficient balance')";
 
      }
 
 
     else {
 
-                // deducting amount from sender's account
+               
                 $bal = $sql1['BALANCE'] - $amount;
                 $sql = "UPDATE customers set BALANCE=$bal where id=$from";
                 mysqli_query($conn,$sql);
 
 
-                // adding amount to reciever's account
                 $newbalance = $sql2['BALANCE'] + $amount;
                 $sql = "UPDATE customers set BALANCE=$newbalance where id=$to";
 
@@ -94,7 +93,7 @@ if(isset($_POST['submit']))
               die("sorry".mysqli_connect_error());
             }
             else{
-              // echo "Connection to db successful<br>";
+              echo "Connection to db successful<br>";
 }
                 $sid = (isset($_GET['id']) ? $_GET['id'] : '');
                 $sql = "SELECT * FROM  customers where id='$sid'";
